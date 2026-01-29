@@ -1,10 +1,10 @@
 import { StarField } from "@/components/StarField"
-import { ChevronDown, Linkedin, Users, LineChart, Clock, Lightbulb, BotIcon as Robot } from "lucide-react"
+import { ChevronDown, Linkedin, Users, LineChart, Clock, Lightbulb } from "lucide-react"
 import { ContactForm } from "@/components/ContactForm"
-import { ChatbotModal } from "@/components/ChatbotModal"
 import { useState, useEffect, useRef } from "react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import Icon from "@/components/ui/icon"
 
 export default function Index() {
   const [isHeadingVisible, setIsHeadingVisible] = useState(false)
@@ -12,7 +12,6 @@ export default function Index() {
   const [isServicesVisible, setIsServicesVisible] = useState(false)
   const [isServicesTitleVisible, setIsServicesTitleVisible] = useState(false)
   const [blurAmount, setBlurAmount] = useState(0)
-  const [isChatbotOpen, setIsChatbotOpen] = useState(false)
   const [initialHeight, setInitialHeight] = useState(0)
   const headingRef = useRef<HTMLHeadingElement>(null)
   const aboutSectionRef = useRef<HTMLElement>(null)
@@ -189,16 +188,6 @@ export default function Index() {
     }
   }
 
-  // Open chatbot modal
-  const openChatbot = () => {
-    setIsChatbotOpen(true)
-  }
-
-  // Close chatbot modal
-  const closeChatbot = () => {
-    setIsChatbotOpen(false)
-  }
-
   // Use fixed height for hero section based on initial viewport height
   const heroStyle = {
     height: initialHeight ? `${initialHeight}px` : "100vh",
@@ -241,22 +230,29 @@ export default function Index() {
               }}
             >
               <h1 className="text-4xl font-bold text-white md:text-6xl font-heading">
-                Nebula Ventures{" "}
-                <span role="img" aria-label="rocket">
-                  🚀
+                Ваш личный кабинет{" "}
+                <span role="img" aria-label="sparkles">
+                  ✨
                 </span>
               </h1>
               <p className="mt-4 text-lg text-gray-300 md:text-xl px-4 max-w-xs mx-auto md:max-w-none">
-                Экспертиза в области ИИ и технологий
+                Управляйте заказами, отслеживайте историю и контролируйте профиль в одном месте
               </p>
-              <Button
-                onClick={scrollToAbout}
-                variant="outline"
-                size="sm"
-                className="mt-6 bg-transparent text-white border-white hover:bg-white hover:text-black transition-colors"
-              >
-                О нас
-              </Button>
+              <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
+                <Button
+                  size="lg"
+                  className="bg-white text-black hover:bg-gray-100 transition-all duration-300 ease-in-out shadow-lg hover:shadow-xl"
+                >
+                  Войти в кабинет
+                </Button>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="bg-transparent text-white border-white hover:bg-white hover:text-black transition-all duration-300 ease-in-out shadow-lg hover:shadow-xl"
+                >
+                  Регистрация
+                </Button>
+              </div>
             </div>
           </div>
 
@@ -282,144 +278,101 @@ export default function Index() {
           <div
             ref={aboutContentRef}
             className={cn(
-              "max-w-4xl mx-auto transition-all duration-1000 ease-out",
+              "transition-all duration-1000 ease-out",
               isAboutVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10",
             )}
           >
-            <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
-              <div className="w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-gray-700 flex-shrink-0">
-                <img
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/icon-d4g0PyeQftYkhSxiNDNMwiGNNteM3o.svg"
-                  alt="Профиль"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="space-y-4 text-center md:text-left px-4 md:px-0">
-                <h2 className="text-3xl font-bold font-heading">О нас</h2>
-                <div className="space-y-4 max-w-2xl">
-                  <p className="text-gray-300">
-                    Мы помогаем компаниям использовать передовые технологии, чтобы радовать клиентов
-                    и оптимизировать бизнес-процессы.
-                  </p>
-                  <p className="text-gray-300">
-                    Стратегическое планирование, техническое лидерство или практическая поддержка разработки —
-                    мы поможем создать правильные решения для вашего бизнеса.
-                  </p>
-                  <p className="text-gray-300">
-                    Наша команда имеет более 10 лет опыта создания сложных технических продуктов
-                    для стартапов и крупных компаний. Свяжитесь с нами или попробуйте ИИ-ассистента.
-                  </p>
-                </div>
-                <div className="flex flex-col sm:flex-row gap-3 pt-4 justify-center md:justify-start">
-                  <div className="w-full sm:w-auto flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
-                    <Button
-                      onClick={scrollToContact}
-                      variant="outline"
-                      size="sm"
-                      className="bg-transparent text-white border-white hover:bg-white hover:text-black transition-colors w-[140px] mx-auto sm:mx-0"
-                    >
-                      Связаться
-                    </Button>
-                    <Button
-                      onClick={openChatbot}
-                      variant="outline"
-                      size="sm"
-                      className="bg-transparent text-white border-white hover:bg-white hover:text-black transition-colors w-[140px] mx-auto sm:mx-0 flex items-center justify-center"
-                    >
-                      <Robot className="mr-1 h-4 w-4" />
-                      ИИ-чат
-                    </Button>
-                  </div>
-                </div>
-              </div>
+          <h2
+            ref={headingRef}
+            className={cn(
+              "text-3xl font-bold text-white md:text-5xl transition-all duration-1000 ease-out mb-12 text-center",
+              isHeadingVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10",
+            )}
+          >
+            Преимущества платформы
+          </h2>
+
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="rounded-lg border border-gray-700 bg-gray-800/50 p-6 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+              <Icon name="Users" className="mb-4 h-10 w-10 text-blue-400" />
+              <h3 className="text-xl font-bold text-white mb-2">Удобный интерфейс</h3>
+              <p className="text-gray-300">Интуитивно понятный дизайн личного кабинета для быстрого доступа ко всем функциям</p>
             </div>
+
+            <div className="rounded-lg border border-gray-700 bg-gray-800/50 p-6 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+              <Icon name="LineChart" className="mb-4 h-10 w-10 text-blue-400" />
+              <h3 className="text-xl font-bold text-white mb-2">Полная история действий</h3>
+              <p className="text-gray-300">Отслеживайте все свои заказы, платежи и активность в удобном формате</p>
+            </div>
+
+            <div className="rounded-lg border border-gray-700 bg-gray-800/50 p-6 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+              <Icon name="Clock" className="mb-4 h-10 w-10 text-blue-400" />
+              <h3 className="text-xl font-bold text-white mb-2">Доступ 24/7</h3>
+              <p className="text-gray-300">Управляйте своим профилем и заказами в любое время из любого места</p>
+            </div>
+
+            <div className="rounded-lg border border-gray-700 bg-gray-800/50 p-6 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+              <Icon name="Lightbulb" className="mb-4 h-10 w-10 text-blue-400" />
+              <h3 className="text-xl font-bold text-white mb-2">Безопасность данных</h3>
+              <p className="text-gray-300">Надежная защита вашей личной информации и конфиденциальности</p>
+            </div>
+          </div>
           </div>
         </div>
       </section>
 
-      <section ref={servicesSectionRef} id="services" className="py-20 bg-gray-900 text-white">
+      <section ref={servicesSectionRef} id="services" className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <h2
             ref={servicesTitleRef}
             className={cn(
-              "mb-12 text-center text-3xl font-bold font-heading transition-all duration-1000 ease-out",
+              "text-3xl font-bold text-gray-900 md:text-5xl mb-12 transition-all duration-1000 ease-out text-center",
               isServicesTitleVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10",
             )}
           >
-            Услуги
+            Возможности кабинета
           </h2>
+
           <div
             ref={servicesContentRef}
             className={cn(
-              "max-w-5xl mx-auto transition-all duration-1000 ease-out",
+              "grid gap-8 sm:grid-cols-2 lg:grid-cols-3 transition-all duration-1000 ease-out",
               isServicesVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10",
             )}
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* Fractional CPO */}
-              <div className="bg-gray-800 rounded-lg p-6 transition-all duration-300 hover:bg-gray-700">
-                <div className="flex items-center mb-4">
-                  <Users className="h-7 w-7 text-white mr-4" aria-hidden="true" />
-                  <h3 className="text-xl font-semibold font-heading">CPO / CTO на аутсорсе</h3>
-                </div>
-                <p className="text-gray-300">
-                  Продуктовое лидерство, выстраивание процессов, развитие команды, технологическая стратегия.
-                </p>
-              </div>
+            <div className="overflow-hidden rounded-lg bg-white p-6 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+              <div className="mb-3 text-4xl">👤</div>
+              <h3 className="mb-2 text-xl font-bold">Управление профилем</h3>
+              <p className="text-gray-600">Редактируйте личные данные, настройки уведомлений и предпочтения в одном месте</p>
+            </div>
 
-              {/* Product Consulting */}
-              <div className="bg-gray-800 rounded-lg p-6 transition-all duration-300 hover:bg-gray-700">
-                <div className="flex items-center mb-4">
-                  <LineChart className="h-7 w-7 text-white mr-4" aria-hidden="true" />
-                  <h3 className="text-xl font-semibold font-heading">Продуктовый консалтинг</h3>
-                </div>
-                <p className="text-gray-300">
-                  Разработка роадмапа, поиск и валидация product-market fit, оценка кандидатов.
-                </p>
-              </div>
+            <div className="overflow-hidden rounded-lg bg-white p-6 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+              <div className="mb-3 text-4xl">📦</div>
+              <h3 className="mb-2 text-xl font-bold">Мои заказы</h3>
+              <p className="text-gray-600">Отслеживайте статус текущих заказов, просматривайте детали и историю покупок</p>
+            </div>
 
-              {/* Interim Leadership */}
-              <div className="bg-gray-800 rounded-lg p-6 transition-all duration-300 hover:bg-gray-700">
-                <div className="flex items-center mb-4">
-                  <Clock className="h-7 w-7 text-white mr-4" aria-hidden="true" />
-                  <h3 className="text-xl font-semibold font-heading">Временное руководство</h3>
-                </div>
-                <p className="text-gray-300">Временный CPO или VP of Product для компаний в период трансформации.</p>
-              </div>
-
-              {/* Workshops & Advisory */}
-              <div className="bg-gray-800 rounded-lg p-6 transition-all duration-300 hover:bg-gray-700">
-                <div className="flex items-center mb-4">
-                  <Lightbulb className="h-7 w-7 text-white mr-4" aria-hidden="true" />
-                  <h3 className="text-xl font-semibold font-heading">Разработка продуктов</h3>
-                </div>
-                <p className="text-gray-300">
-                  Быстрое прототипирование и запуск внутренних и внешних приложений и сайтов
-                  с использованием современных инструментов.
-                </p>
-              </div>
+            <div className="overflow-hidden rounded-lg bg-white p-6 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+              <div className="mb-3 text-4xl">💳</div>
+              <h3 className="mb-2 text-xl font-bold">Платежи и счета</h3>
+              <p className="text-gray-600">Управляйте способами оплаты, просматривайте счета и историю транзакций</p>
             </div>
           </div>
         </div>
       </section>
 
-      <section ref={contactSectionRef} id="contact" className="bg-gray-100 py-16">
-        <div className="container mx-auto px-4">
-          <h2
-            ref={headingRef}
-            className={cn(
-              "mb-12 text-center text-3xl font-bold font-heading transition-all duration-1000 ease-out",
-              isHeadingVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10",
-            )}
-          >
-            Давайте создавать
-          </h2>
+      <section ref={contactSectionRef} className="bg-gray-50 py-12">
+        <div className="container mx-auto px-6">
+          <h2 className="mb-8 text-center text-3xl font-bold text-gray-900 md:text-5xl">Остались вопросы?</h2>
           <ContactForm />
         </div>
       </section>
 
-      {/* Chatbot Modal */}
-      <ChatbotModal isOpen={isChatbotOpen} onClose={closeChatbot} />
+      <footer className="bg-black py-6">
+        <div className="container mx-auto px-6 text-center text-gray-400">
+          <p>&copy; 2024 Личный кабинет. Все права защищены.</p>
+        </div>
+      </footer>
     </div>
   )
 }
