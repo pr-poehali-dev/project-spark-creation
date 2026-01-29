@@ -1,5 +1,5 @@
 import { StarField } from "@/components/StarField"
-import { ChevronDown, Linkedin, Users, LineChart, Clock, Lightbulb } from "lucide-react"
+import { ChevronDown, Linkedin } from "lucide-react"
 import { ContactForm } from "@/components/ContactForm"
 import { useState, useEffect, useRef } from "react"
 import { cn } from "@/lib/utils"
@@ -34,21 +34,15 @@ export default function Index() {
   // Handle scroll events to calculate blur amount
   useEffect(() => {
     const handleScroll = () => {
-      // Store the current scroll position
       scrollRef.current = window.scrollY
 
       if (!ticking.current) {
         window.requestAnimationFrame(() => {
-          // Calculate blur based on scroll position
-          // Reduced max blur from 20px to 8px for a more subtle effect
           const maxBlur = 8
-          // Increased trigger height to make the effect develop more slowly
           const triggerHeight = initialHeight * 1.2
           const newBlurAmount = Math.min(maxBlur, (scrollRef.current / triggerHeight) * maxBlur)
 
           setBlurAmount(newBlurAmount)
-
-          // Update last scroll position for next comparison
           lastScrollRef.current = scrollRef.current
           ticking.current = false
         })
@@ -70,7 +64,6 @@ export default function Index() {
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsHeadingVisible(true)
-          // Once visible, no need to observe anymore
           if (headingRef.current) {
             headingObserver.unobserve(headingRef.current)
           }
@@ -89,7 +82,6 @@ export default function Index() {
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsAboutVisible(true)
-          // Once visible, no need to observe anymore
           if (aboutContentRef.current) {
             aboutObserver.unobserve(aboutContentRef.current)
           }
@@ -108,7 +100,6 @@ export default function Index() {
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsServicesVisible(true)
-          // Once visible, no need to observe anymore
           if (servicesContentRef.current) {
             servicesObserver.unobserve(servicesContentRef.current)
           }
@@ -127,7 +118,6 @@ export default function Index() {
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsServicesTitleVisible(true)
-          // Once visible, no need to observe anymore
           if (servicesTitleRef.current) {
             servicesTitleObserver.unobserve(servicesTitleRef.current)
           }
@@ -158,17 +148,13 @@ export default function Index() {
     }
   }, [])
 
-  // Calculate scale factor based on blur amount
-  // Maintain the same scaling effect even with reduced blur
-  const scaleFactor = 1 + blurAmount / 16 // Adjusted to maintain similar scaling with reduced blur
+  const scaleFactor = 1 + blurAmount / 16
 
-  // Add a warp speed effect to stars based on blur amount
   const warpSpeedStyle = {
     transform: `scale(${scaleFactor})`,
-    transition: "transform 0.2s ease-out", // Slightly longer transition for smoother effect
+    transition: "transform 0.2s ease-out",
   }
 
-  // Scroll to about section
   const scrollToAbout = () => {
     if (aboutSectionRef.current) {
       aboutSectionRef.current.scrollIntoView({
@@ -178,7 +164,6 @@ export default function Index() {
     }
   }
 
-  // Scroll to contact section
   const scrollToContact = () => {
     if (contactSectionRef.current) {
       contactSectionRef.current.scrollIntoView({
@@ -188,7 +173,6 @@ export default function Index() {
     }
   }
 
-  // Use fixed height for hero section based on initial viewport height
   const heroStyle = {
     height: initialHeight ? `${initialHeight}px` : "100vh",
   }
@@ -196,7 +180,6 @@ export default function Index() {
   return (
     <div className="min-h-screen">
       <section className="relative w-full overflow-hidden bg-black" style={heroStyle}>
-        {/* Navigation links in top right corner */}
         <div className="absolute top-6 right-6 z-10 flex space-x-3">
           <a
             href="https://linkedin.com/company/example"
@@ -230,27 +213,27 @@ export default function Index() {
               }}
             >
               <h1 className="text-4xl font-bold text-white md:text-6xl font-heading">
-                Ваш личный кабинет{" "}
-                <span role="img" aria-label="sparkles">
-                  ✨
+                Шахматный клуб{" "}
+                <span role="img" aria-label="chess">
+                  ♟️
                 </span>
               </h1>
               <p className="mt-4 text-lg text-gray-300 md:text-xl px-4 max-w-xs mx-auto md:max-w-none">
-                Управляйте заказами, отслеживайте историю и контролируйте профиль в одном месте
+                Играйте онлайн, отслеживайте рейтинг, участвуйте в турнирах
               </p>
               <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
                 <Button
                   size="lg"
                   className="bg-white text-black hover:bg-gray-100 transition-all duration-300 ease-in-out shadow-lg hover:shadow-xl"
                 >
-                  Войти в кабинет
+                  Начать играть
                 </Button>
                 <Button
                   size="lg"
                   variant="outline"
                   className="bg-transparent text-white border-white hover:bg-white hover:text-black transition-all duration-300 ease-in-out shadow-lg hover:shadow-xl"
                 >
-                  Регистрация
+                  Турниры
                 </Button>
               </div>
             </div>
@@ -289,32 +272,32 @@ export default function Index() {
               isHeadingVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10",
             )}
           >
-            Преимущества платформы
+            Почему выбирают нас
           </h2>
 
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             <div className="rounded-lg border border-gray-700 bg-gray-800/50 p-6 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
               <Icon name="Users" className="mb-4 h-10 w-10 text-blue-400" />
-              <h3 className="text-xl font-bold text-white mb-2">Удобный интерфейс</h3>
-              <p className="text-gray-300">Интуитивно понятный дизайн личного кабинета для быстрого доступа ко всем функциям</p>
+              <h3 className="text-xl font-bold text-white mb-2">Игра онлайн</h3>
+              <p className="text-gray-300">Играйте с соперниками со всего мира в режиме реального времени</p>
             </div>
 
             <div className="rounded-lg border border-gray-700 bg-gray-800/50 p-6 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
               <Icon name="LineChart" className="mb-4 h-10 w-10 text-blue-400" />
-              <h3 className="text-xl font-bold text-white mb-2">Полная история действий</h3>
-              <p className="text-gray-300">Отслеживайте все свои заказы, платежи и активность в удобном формате</p>
+              <h3 className="text-xl font-bold text-white mb-2">Рейтинговая система</h3>
+              <p className="text-gray-300">Отслеживайте свой прогресс и рейтинг ELO в разных контролях времени</p>
             </div>
 
             <div className="rounded-lg border border-gray-700 bg-gray-800/50 p-6 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
               <Icon name="Clock" className="mb-4 h-10 w-10 text-blue-400" />
-              <h3 className="text-xl font-bold text-white mb-2">Доступ 24/7</h3>
-              <p className="text-gray-300">Управляйте своим профилем и заказами в любое время из любого места</p>
+              <h3 className="text-xl font-bold text-white mb-2">Разные контроли</h3>
+              <p className="text-gray-300">Блиц, рапид, классика — выбирайте комфортный для вас темп игры</p>
             </div>
 
             <div className="rounded-lg border border-gray-700 bg-gray-800/50 p-6 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-              <Icon name="Lightbulb" className="mb-4 h-10 w-10 text-blue-400" />
-              <h3 className="text-xl font-bold text-white mb-2">Безопасность данных</h3>
-              <p className="text-gray-300">Надежная защита вашей личной информации и конфиденциальности</p>
+              <Icon name="Trophy" className="mb-4 h-10 w-10 text-blue-400" />
+              <h3 className="text-xl font-bold text-white mb-2">Турниры</h3>
+              <p className="text-gray-300">Участвуйте в еженедельных турнирах и соревнуйтесь за призы</p>
             </div>
           </div>
           </div>
@@ -330,7 +313,7 @@ export default function Index() {
               isServicesTitleVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10",
             )}
           >
-            Возможности кабинета
+            Возможности платформы
           </h2>
 
           <div
@@ -341,21 +324,21 @@ export default function Index() {
             )}
           >
             <div className="overflow-hidden rounded-lg bg-white p-6 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-              <div className="mb-3 text-4xl">👤</div>
-              <h3 className="mb-2 text-xl font-bold">Управление профилем</h3>
-              <p className="text-gray-600">Редактируйте личные данные, настройки уведомлений и предпочтения в одном месте</p>
+              <div className="mb-3 text-4xl">♟️</div>
+              <h3 className="mb-2 text-xl font-bold">Личный кабинет</h3>
+              <p className="text-gray-600">Ваш профиль игрока с рейтингом, статистикой побед и достижениями</p>
             </div>
 
             <div className="overflow-hidden rounded-lg bg-white p-6 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-              <div className="mb-3 text-4xl">📦</div>
-              <h3 className="mb-2 text-xl font-bold">Мои заказы</h3>
-              <p className="text-gray-600">Отслеживайте статус текущих заказов, просматривайте детали и историю покупок</p>
+              <div className="mb-3 text-4xl">📊</div>
+              <h3 className="mb-2 text-xl font-bold">История партий</h3>
+              <p className="text-gray-600">Просматривайте и анализируйте все свои сыгранные партии с записями ходов</p>
             </div>
 
             <div className="overflow-hidden rounded-lg bg-white p-6 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-              <div className="mb-3 text-4xl">💳</div>
-              <h3 className="mb-2 text-xl font-bold">Платежи и счета</h3>
-              <p className="text-gray-600">Управляйте способами оплаты, просматривайте счета и историю транзакций</p>
+              <div className="mb-3 text-4xl">🏆</div>
+              <h3 className="mb-2 text-xl font-bold">Турниры и достижения</h3>
+              <p className="text-gray-600">Участвуйте в турнирах, зарабатывайте достижения и поднимайтесь в рейтинге</p>
             </div>
           </div>
         </div>
@@ -363,14 +346,14 @@ export default function Index() {
 
       <section ref={contactSectionRef} className="bg-gray-50 py-12">
         <div className="container mx-auto px-6">
-          <h2 className="mb-8 text-center text-3xl font-bold text-gray-900 md:text-5xl">Остались вопросы?</h2>
+          <h2 className="mb-8 text-center text-3xl font-bold text-gray-900 md:text-5xl">Связаться с нами</h2>
           <ContactForm />
         </div>
       </section>
 
       <footer className="bg-black py-6">
         <div className="container mx-auto px-6 text-center text-gray-400">
-          <p>&copy; 2024 Личный кабинет. Все права защищены.</p>
+          <p>&copy; 2024 Шахматный клуб. Все права защищены.</p>
         </div>
       </footer>
     </div>
